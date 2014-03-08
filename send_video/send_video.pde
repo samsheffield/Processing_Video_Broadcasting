@@ -13,8 +13,8 @@ void setup() {
     println(i + ": " +cameras[i]);
   }
 
-  // IMPORTANT: Choose a suitable webcam. I've chosen a low resolution setting (320 x 180) to reduce amount of data to send.
-  cam = new Capture(this, cameras[6]);
+  // IMPORTANT: Choose a suitable webcam. I've chosen a low resolution setting (320 x 240) to reduce amount of data to send.
+  cam = new Capture(this, 320, 240);
   cam.start();
 }
 
