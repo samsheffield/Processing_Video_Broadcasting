@@ -6,22 +6,23 @@ import java.io.*;
 import java.net.*;
 
 class VideoBroadcastReceiver{
-  // Port we are receiving.
-  int port = 9100; 
+  int port; // Port we are receiving.
   DatagramSocket ds; 
-  // A byte array to read into (max size of 65536, could be smaller)
-  byte[] buffer = new byte[65536]; 
+  byte[] buffer = new byte[65536]; // A byte array to read into (max size of 65536, could be smaller)
   PImage video;
+  boolean verbose;
 
-  VideoBroadcastReceiver(){
+  VideoBroadcastReceiver(int _videoWidth, int _videoHeight, int _port){
+    port = _port;
     try {
       ds = new DatagramSocket(port);
     } catch (SocketException e) {
       e.printStackTrace();
     } 
-      video = createImage(320,180,RGB);
-    }
-  void checkForImage() {
+      video = createImage(_videoWidth, _videoHeight,RGB);
+  }
+
+  void getVideo() {
     DatagramPacket p = new DatagramPacket(buffer, buffer.length); 
     try {
       ds.receive(p);
@@ -30,7 +31,7 @@ class VideoBroadcastReceiver{
     } 
     byte[] data = p.getData();
 
-    println("Received datagram with " + data.length + " bytes." );
+    if(verbose) println("Received datagram with " + data.length + " bytes." );
 
     // Read incoming data into a ByteArrayInputStream
     ByteArrayInputStream bais = new ByteArrayInputStream( data );

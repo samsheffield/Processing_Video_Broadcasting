@@ -5,7 +5,7 @@ VideoBroadcaster vb;
 
 void setup() {
   size(320,240);
-  vb = new VideoBroadcaster();
+  vb = new VideoBroadcaster(9100);
 
   String[] cameras = Capture.list();
   println("Available cameras:");

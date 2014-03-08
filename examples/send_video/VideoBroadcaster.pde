@@ -7,10 +7,12 @@ import java.io.*;
 import java.net.*;
 
 class VideoBroadcaster{
-  int remotePort = 9100;
+  int remotePort;
   DatagramSocket ds; 
+  boolean verbose;
 
-  VideoBroadcaster(){
+  VideoBroadcaster(int _remotePort){
+    remotePort = _remotePort;
     try {
       ds = new DatagramSocket();
     } 
@@ -44,7 +46,7 @@ class VideoBroadcaster{
     byte[] packet = baStream.toByteArray();
 
     // Send JPEG data as a datagram
-    println("Sending datagram with " + packet.length + " bytes");
+    if (verbose) println("Sending datagram with " + packet.length + " bytes");
     try {
       ds.send(new DatagramPacket(packet,packet.length, InetAddress.getByName("localhost"), remotePort));
     } 
