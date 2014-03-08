@@ -1,3 +1,5 @@
+// Based on an old UDP streaming example from Daniel Shiffman (http://shiffman.net/2010/11/13/streaming-video-with-udp-in-processing/)
+
 // Needed to use BufferedImage in Processing
 import javax.imageio.*;
 import java.awt.image.*; 
@@ -7,11 +9,13 @@ import java.io.*;
 import java.net.*;
 
 class VideoBroadcaster{
-  int remotePort;
+  String remoteIP; // The IP address of the remote computer
+  int remotePort; //The port we are sending to
   DatagramSocket ds; 
-  boolean verbose;
+  boolean verbose; // Toggle console output
 
-  VideoBroadcaster(int _remotePort){
+  VideoBroadcaster(String _remoteIP, int _remotePort){
+    remoteIP = _remoteIP;
     remotePort = _remotePort;
     try {
       ds = new DatagramSocket();
@@ -47,8 +51,9 @@ class VideoBroadcaster{
 
     // Send JPEG data as a datagram
     if (verbose) println("Sending datagram with " + packet.length + " bytes");
+
     try {
-      ds.send(new DatagramPacket(packet,packet.length, InetAddress.getByName("localhost"), remotePort));
+      ds.send(new DatagramPacket(packet,packet.length, InetAddress.getByName(remoteIP), remotePort));
     } 
     catch (Exception e) {
       e.printStackTrace();

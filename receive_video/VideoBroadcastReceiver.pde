@@ -1,3 +1,6 @@
+// Based on an old UDP streaming example from Daniel Shiffman (http://shiffman.net/2010/11/13/streaming-video-with-udp-in-processing/)
+
+// Needed to use BufferedImage in Processing
 import java.awt.image.*; 
 import javax.imageio.*;
 
@@ -9,8 +12,8 @@ class VideoBroadcastReceiver{
   int port; // Port we are receiving.
   DatagramSocket ds; 
   byte[] buffer = new byte[65536]; // A byte array to read into (max size of 65536, could be smaller)
-  PImage video;
-  boolean verbose;
+  PImage video; // Holds incoming video frames
+  boolean verbose;  // Toggle console output
 
   VideoBroadcastReceiver(int _videoWidth, int _videoHeight, int _port){
     port = _port;
